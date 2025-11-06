@@ -11,6 +11,7 @@ import movie_recommend as movie
 def extract(line, phrase):
     return line.replace(phrase, "").strip()
 
+# fixes alexa syntax
 def fix_alexa(command):
     sp_index = command.find(' ')
     for char in command[:sp_index]:
@@ -28,15 +29,18 @@ def run_alexa():
         print("Sorry, I don't understand that. You have to type 'Alexa'.")
         return
 
+# alexa play music on yt
     if 'alexa play' in command:
         song = extract(command, 'alexa play')
         print("Alexa: Playing", song)
         pywhatkit.playonyt(song)
 
+# alexa genius feature
     elif 'alexa what song goes like' in command:
         song_lyrics = extract(command, 'alexa what song goes like')
         genius.find(song_lyrics)
 
+# alexa joke
     elif 'alexa tell a joke' in command:
         j = random.randint(1,4)
         if j > 1:
@@ -44,6 +48,7 @@ def run_alexa():
         else:
             print("Alexa: Joke")
 
+# Math
     elif 'solve' in command:
         problem = extract(command, 'alexa solve')
 
@@ -60,8 +65,9 @@ def run_alexa():
             print("Alexa:", result)
 
         except:
-            print("Sorry, Alexa can't solve complex things. Ask ChatGPT.")
+            print("Alexa: Sorry, Alexa can't solve complex things. Ask ChatGPT.")
 
+# Person Search Up
     elif 'alexa who is' in command or 'alexa what is' in command:
         if 'who is' in command:
             query = extract(command, 'alexa who is')
@@ -69,6 +75,7 @@ def run_alexa():
             query = extract(command, 'alexa what is')
         wiki.search(query)
 
+# Definition
     elif 'alexa define' in command or 'alexa what does' in command:
         if 'define' in command:
             word = extract(command, 'alexa define')
@@ -77,11 +84,13 @@ def run_alexa():
         word = word.replace('mean', '').strip()
         dictionary.define(word)
 
-    elif 'alexa recommend a movie' in command or 'suggest a movie':
+# Movie Recommend
+    elif 'alexa recommend a movie' in command or 'alexa suggest a movie' in command:
         print("Alexa: What genre do you like?")
         genre = input("You: ").lower().strip()
         movie.recommend(genre)
 
+# Exit
     elif 'alexa shutdown' in command or 'goodbye' in command:
         print("Alexa: Goodbye!")
         exit()

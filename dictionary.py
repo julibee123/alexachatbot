@@ -3,7 +3,7 @@ import requests
 def define(word):
     api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
     try:
-        resp = requests.get(api_url, timeout=5)
+        resp = requests.get(api_url, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
             entry = data[0]
